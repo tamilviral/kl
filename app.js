@@ -3531,15 +3531,15 @@ const ADS_KEY = 'kerala_lottery_ads';
 window.GoogleAds = {
   defaultConfig: {
     enabled: true,
-    testMode: true, // safe default for initial setup & APK testing
-    publisherId: 'ca-pub-1234567890123456',
+    testMode: false, // Live working AdSense ads mode
+    publisherId: 'ca-pub-7334877956926189',
     stickyAd: true,
     interstitialOnVerify: false,
     slots: {
-      top: '1234567890',
-      middle: '2345678901',
-      indiv: '3456789012',
-      sticky: '4567890123'
+      top: '',
+      middle: '',
+      indiv: '',
+      sticky: ''
     }
   },
 
@@ -3548,7 +3548,14 @@ window.GoogleAds = {
   getConfig() {
     try {
       const raw = localStorage.getItem(ADS_KEY);
-      if (raw) return { ...this.defaultConfig, ...JSON.parse(raw) };
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        // Automatically upgrade demo publisher IDs to user's real publisher ID
+        if (!parsed.publisherId || parsed.publisherId === 'ca-pub-1234567890123456') {
+          parsed.publisherId = 'ca-pub-7334877956926189';
+        }
+        return { ...this.defaultConfig, ...parsed };
+      }
     } catch (e) {}
     return { ...this.defaultConfig };
   },
@@ -3574,12 +3581,13 @@ window.GoogleAds = {
       return;
     }
 
-    // Load Google AdSense Script if live mode & publisher ID present
-    if (!cfg.testMode && cfg.publisherId && !document.getElementById('adsense-script')) {
+    // Ensure official Google AdSense script tag is present in document head
+    const pubId = cfg.publisherId || 'ca-pub-7334877956926189';
+    if (!document.getElementById('adsense-script')) {
       const script = document.createElement('script');
       script.id = 'adsense-script';
       script.async = true;
-      script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${encodeURIComponent(cfg.publisherId)}`;
+      script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${encodeURIComponent(pubId)}`;
       script.crossOrigin = 'anonymous';
       document.head.appendChild(script);
     }
@@ -3633,6 +3641,8 @@ window.GoogleAds = {
       container.style.display = container.classList.contains('ad-sticky') ? 'flex' : 'block';
     }
 
+    const pubId = cfg.publisherId || 'ca-pub-7334877956926189';
+
     if (cfg.testMode) {
       el.innerHTML = `
         <div class="ad-test-box">
@@ -3640,15 +3650,15 @@ window.GoogleAds = {
             <span class="ad-test-badge">Google Ads Test</span>
             <span class="ad-test-text">${escapeHTML(title)}</span>
           </div>
-          <div class="ad-test-sub">Slot ID: <code>${escapeHTML(slotId || 'auto')}</code> &bull; Publisher: <code>${escapeHTML(cfg.publisherId || 'ca-pub-demo')}</code></div>
+          <div class="ad-test-sub">Slot ID: <code>${escapeHTML(slotId || 'auto')}</code> &bull; Publisher: <code>${escapeHTML(pubId)}</code></div>
         </div>
       `;
     } else {
+      const slotAttr = slotId ? `\n             data-ad-slot="${escapeHTML(slotId)}"` : '';
       el.innerHTML = `
         <ins class="adsbygoogle"
              style="display:block;width:100%"
-             data-ad-client="${escapeHTML(cfg.publisherId)}"
-             data-ad-slot="${escapeHTML(slotId || '')}"
+             data-ad-client="${escapeHTML(pubId)}"${slotAttr}
              data-ad-format="${format}"
              data-full-width-responsive="true"></ins>
       `;
@@ -3669,21 +3679,23 @@ window.GoogleAds = {
 
     this.pendingInterstitialCallback = callback;
     const slot = document.getElementById('ad-slot-interstitial');
+    const pubId = cfg.publisherId || 'ca-pub-7334877956926189';
+
     if (slot) {
       if (cfg.testMode) {
         slot.innerHTML = `
           <div class="ad-test-box" style="min-height:200px">
             <span class="ad-test-badge" style="margin-bottom:8px">Google AdSense Interstitial</span>
             <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px">Full Screen Sponsored Break</div>
-            <div class="ad-test-sub">Client: ${escapeHTML(cfg.publisherId)}</div>
+            <div class="ad-test-sub">Client: ${escapeHTML(pubId)}</div>
           </div>
         `;
       } else {
+        const slotAttr = cfg.slots?.middle ? `\n               data-ad-slot="${escapeHTML(cfg.slots.middle)}"` : '';
         slot.innerHTML = `
           <ins class="adsbygoogle"
                style="display:block;min-height:220px;width:100%"
-               data-ad-client="${escapeHTML(cfg.publisherId)}"
-               data-ad-slot="${escapeHTML(cfg.slots?.middle || '')}"
+               data-ad-client="${escapeHTML(pubId)}"${slotAttr}
                data-ad-format="rectangle"></ins>
         `;
         try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
