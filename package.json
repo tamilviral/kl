@@ -1,0 +1,19 @@
+{
+  "name": "kerala-lottery-android-app",
+  "version": "1.0.0",
+  "description": "Kerala Lottery Result Publishing System & Android APK",
+  "main": "index.html",
+  "scripts": {
+    "sync": "sync-to-android.bat",
+    "build:apk": "build-apk.bat",
+    "start": "npx serve ."
+  },
+  "keywords": [
+    "kerala-lottery",
+    "android",
+    "apk",
+    "webview"
+  ],
+  "author": "Government of Kerala Lottery Department",
+  "license": "ISC"
+}

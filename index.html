@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Kerala Lottery Result Dashboard | Government of Kerala</title>
+  <meta name="description"
+    content="Official Kerala Government Lottery Result Publishing System. Check Bhagyathara, Sthree Sakthi, Dhanalakshmi, Karunya Plus, Karunya, Pournami and all lottery results." />
+  <meta name="theme-color" content="#080c14" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <link rel="shortcut icon" href="icon-192.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="html5-qrcode.min.js"></script>
+  <script src="qrcode.min.js"></script>
+</head>
+
+<body>
+
+  <!-- TOAST -->
+  <div id="toast-container"></div>
+
+  <!-- ============================================================
+     LOGIN PAGE
+============================================================ -->
+  <section id="page-login" class="page">
+    <div class="login-bg">
+      <div class="orb orb1"></div>
+      <div class="orb orb2"></div>
+      <div class="orb orb3"></div>
+      <div class="grid-overlay"></div>
+      <!-- Decorative ticket pattern -->
+      <div class="ticket-deco">
+        <span>🎟</span><span>🌸</span><span>🏆</span><span>🎟</span><span>🌸</span>
+      </div>
+    </div>
+
+    <div class="login-container">
+      <!-- Brand -->
+      <div class="login-brand-bar">
+        <div class="login-brand">
+          <img src="icon-192.png" alt="Kerala Lottery" class="brand-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-block'" />
+          <div class="kerala-emblem" style="display:none">🐘</div>
+          <div>
+            <div class="kerala-title">Kerala Lottery</div>
+            <div class="kerala-sub">Government of Kerala — Result Dashboard</div>
+          </div>
+        </div>
+        <div class="theme-switcher">
+          <select class="theme-select finput sm" id="theme-select-login" title="Choose Design Theme">
+            <option value="dark">🌙 Dark Sapphire</option>
+            <option value="light">☀️ Clean Light</option>
+            <option value="emerald">🌿 Emerald Gold</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Card -->
+      <div class="login-card glass-card">
+        <div class="login-card-top">
+          <h2>Welcome</h2>
+          <p>Sign in to manage lottery results</p>
+        </div>
+
+        <!-- Role Tabs -->
+        <div class="role-tabs">
+          <button class="role-tab active" data-role="admin" id="tab-admin">
+            ⚙️ Admin / Officer
+          </button>
+          <button class="role-tab" data-role="public" id="tab-public">
+            🎟 Check Result
+          </button>
+        </div>
+
+        <!-- Admin Login Form -->
+        <form id="login-form" class="login-form">
+          <div class="fgroup">
+            <label class="flabel">Username</label>
+            <div class="input-wrap">
+              <span class="iico">👤</span>
+              <input type="text" id="l-user" class="finput" placeholder="Enter username" autocomplete="username" />
+            </div>
+          </div>
+          <div class="fgroup">
+            <label class="flabel">Password</label>
+            <div class="input-wrap">
+              <span class="iico">🔒</span>
+              <input type="password" id="l-pass" class="finput" placeholder="Enter password"
+                autocomplete="current-password" />
+              <button type="button" class="pw-eye" id="pw-toggle">👁</button>
+            </div>
+          </div>
+
+          <div class="demo-hint hidden" id="hint-public">
+            <b>Public access:</b> No login needed — just click below to check your ticket
+          </div>
+          <button type="submit" class="btn btn-gold btn-full" id="login-btn">
+            Sign In &nbsp;→
+          </button>
+        </form>
+
+        <!-- Public shortcut -->
+        <button class="btn btn-ghost btn-full mt-1" id="go-public-btn">
+          🎟 Go to Public Result Checker
+        </button>
+      </div>
+
+      <p class="login-footer">Kerala State Lotteries &nbsp;|&nbsp; Directorate of Kerala State Lotteries &copy; 2026</p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+     ADMIN PANEL
+============================================================ -->
+  <section id="page-admin" class="page">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top">
+        <div class="sb-brand">
+          <img src="icon-192.png" alt="Kerala Lottery" class="sb-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-block'" />
+          <span class="sb-emblem" style="display:none">🐘</span>
+          <div>
+            <div class="sb-title">KL Dashboard</div>
+            <div class="sb-sub">Kerala Lotteries</div>
+          </div>
+        </div>
+        <button class="sidebar-close" id="sidebar-close">✕</button>
+      </div>
+
+      <nav class="sb-nav">
+        <button class="nav-btn active" data-panel="dashboard" id="nav-dashboard">
+          <span class="nav-icon">📊</span> Dashboard
+        </button>
+        <button class="nav-btn" data-panel="draws" id="nav-draws">
+          <span class="nav-icon">🗓</span> Lottery Draws
+        </button>
+        <button class="nav-btn" data-panel="entry" id="nav-entry">
+          <span class="nav-icon">✏️</span> Result Entry
+        </button>
+        <button class="nav-btn" data-panel="results" id="nav-results">
+          <span class="nav-icon">🏆</span> Published Results
+        </button>
+        <button class="nav-btn" data-panel="csv" id="nav-csv">
+          <span class="nav-icon">📤</span> CSV Import
+        </button>
+        <button class="nav-btn" data-panel="notifications" id="nav-notifications">
+          <span class="nav-icon">🔔</span> Notifications
+          <span class="nbadge" id="notif-badge">0</span>
+        </button>
+        <button class="nav-btn" data-panel="lottery-types" id="nav-lottery-types">
+          <span class="nav-icon">🏷️</span> Lottery Schemes
+        </button>
+        <button class="nav-btn" data-panel="mobile-sync" id="nav-mobile-sync">
+          <span class="nav-icon">📱</span> Mobile App &amp; Sync
+        </button>
+        <button class="nav-btn" data-panel="settings" id="nav-settings">
+          <span class="nav-icon">⚙️</span> Account Settings
+        </button>
+        <div class="nav-divider"></div>
+        <button class="nav-btn" id="nav-goto-public" onclick="showPublicPortal()">
+          <span class="nav-icon">🌐</span> Public Portal
+        </button>
+      </nav>
+
+      <div class="sb-foot">
+        <div class="sb-user" id="sb-user-card" title="Click to edit account settings" style="cursor:pointer">
+          <div class="sb-avatar" id="admin-avatar">A</div>
+          <div class="sb-uinfo">
+            <span id="admin-name">Admin</span>
+            <small id="admin-role">Administrator</small>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:4px">
+          <button class="logout-btn" id="btn-change-pw" title="Change Password / Account Settings" style="color:var(--gold-l);font-size:13px">🔑</button>
+          <button class="logout-btn" id="admin-logout" title="Logout">⏻</button>
+        </div>
+      </div>
+    </aside>
+
+    <div class="sb-overlay" id="sb-overlay"></div>
+
+    <!-- MAIN -->
+    <main class="admin-main">
+      <!-- Topbar -->
+      <header class="topbar">
+        <button class="btn-icon" id="menu-toggle">☰</button>
+        <div class="topbar-title">
+          <h2 id="panel-title">Dashboard</h2>
+          <span id="panel-crumb">Kerala Lottery Results System</span>
+        </div>
+        <div class="topbar-right">
+          <button class="btn btn-sm btn-ghost" id="admin-view-public-btn" onclick="showPublicPortal()" title="Switch to Mobile / Public Result Portal" style="display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(212,169,65,0.35);color:var(--gold-l);font-weight:600">
+            🎟️ <span>View Mobile App</span>
+          </button>
+          <div class="theme-switcher">
+            <select class="theme-select finput sm" id="theme-select-admin" title="Choose Design Theme">
+              <option value="dark">🌙 Dark Sapphire</option>
+              <option value="light">☀️ Clean Light</option>
+              <option value="emerald">🌿 Emerald Gold</option>
+            </select>
+          </div>
+          <button class="btn btn-sm btn-ghost" style="color:#FC8181;border:1px solid rgba(220,53,69,.3)"
+            id="reset-db-btn" title="Reset System Data to Defaults">🗑 Reset Data</button>
+          <button class="btn btn-sm btn-gold" id="auto-pub-btn">⏰ Auto-Publish</button>
+          <button class="notif-bell" id="notif-bell">🔔<span class="ndot" id="ndot"></span></button>
+        </div>
+      </header>
+
+      <!-- ── DASHBOARD PANEL ── -->
+      <div class="panel active" id="panel-dashboard">
+        <!-- Stat Cards -->
+        <div class="stats-grid">
+          <div class="stat-card gold">
+            <div class="sc-icon">🎟</div>
+            <div class="sc-body">
+              <span class="sc-val" id="s-draws">0</span>
+              <span class="sc-lbl">Total Draws</span>
+            </div>
+          </div>
+          <div class="stat-card green">
+            <div class="sc-icon">✅</div>
+            <div class="sc-body">
+              <span class="sc-val" id="s-pub">0</span>
+              <span class="sc-lbl">Published</span>
+            </div>
+          </div>
+          <div class="stat-card orange">
+            <div class="sc-icon">⏳</div>
+            <div class="sc-body">
+              <span class="sc-val" id="s-draft">0</span>
+              <span class="sc-lbl">Draft / Pending</span>
+            </div>
+          </div>
+          <div class="stat-card blue">
+            <div class="sc-icon">🏆</div>
+            <div class="sc-body">
+              <span class="sc-val" id="s-prizes">0</span>
+              <span class="sc-lbl">Prize Entries</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dash-two">
+          <!-- Recent draws -->
+          <div class="glass-card">
+            <div class="card-hdr">
+              <h3>Recent Draws</h3>
+              <div style="display:flex;align-items:center;gap:8px">
+                <div class="view-mode-toggle" id="toggle-recent-draws-layout" title="Arrange Results Layout">
+                  <button type="button" class="view-mode-btn active" data-layout="rows" title="List/Row view">☰ Rows</button>
+                  <button type="button" class="view-mode-btn" data-layout="cols" title="Grid/Column view">☵ Columns</button>
+                </div>
+                <button class="btn btn-sm btn-ghost" onclick="switchPanel('draws')">View All</button>
+              </div>
+            </div>
+            <div id="recent-draws"></div>
+          </div>
+          <!-- Lottery type breakdown -->
+          <div class="glass-card">
+            <div class="card-hdr">
+              <h3>Lottery Schedule</h3>
+            </div>
+            <div id="lottery-schedule"></div>
+          </div>
+        </div>
+
+        <!-- Cron Scheduler -->
+        <div class="glass-card cron-box">
+          <div class="card-hdr">
+            <h3>⏰ Auto-Publish Scheduler</h3>
+            <span class="pill pill-green" id="cron-badge">Active</span>
+          </div>
+          <div class="cron-row">
+            <div class="fgroup-inline">
+              <label class="flabel">Daily publish time:</label>
+              <input type="time" id="cron-time" class="finput sm" value="04:00" />
+            </div>
+            <button class="btn btn-gold" id="save-cron-btn">Save</button>
+            <button class="btn btn-outline" id="run-cron-btn">▶ Run Now</button>
+          </div>
+          <p class="cron-note">Publishes all <b>draft</b> draws where <code>draw_date ≤ today</code> automatically at
+            the set time.</p>
+        </div>
+      </div>
+
+      <!-- ── DRAWS PANEL ── -->
+      <div class="panel" id="panel-draws">
+        <div class="panel-bar">
+          <select id="draw-type-filter" class="finput sm"></select>
+          <select id="draw-status-filter" class="finput sm">
+            <option value="">All Status</option>
+            <option value="draft">Draft</option>
+            <option value="published">Published</option>
+          </select>
+          <select id="draws-sort-order" class="finput sm" title="Sort Draws Date-Wise">
+            <option value="desc">📅 Date: Newest First</option>
+            <option value="asc">📅 Date: Oldest First</option>
+          </select>
+          <button class="btn btn-gold" id="add-draw-btn">+ New Draw</button>
+        </div>
+        <div class="table-wrap glass-card">
+          <table class="dtable">
+            <thead>
+              <tr>
+                <th>Draw No.</th>
+                <th>Lottery</th>
+                <th>Draw Date</th>
+                <th>Publish Date</th>
+                <th>Status</th>
+                <th>Prizes</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="draws-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── RESULT ENTRY PANEL ── -->
+      <div class="panel" id="panel-entry">
+        <div class="glass-card">
+          <div class="entry-hdr-row"
+            style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)">
+            <h3 class="card-title" style="margin-bottom:0">✏️ Prize-wise Number Entry</h3>
+            <div id="entry-actions-top" class="entry-actions" style="display:none;margin-top:0">
+              <button class="btn btn-gold" id="save-prizes-btn-top">💾 Save Results</button>
+              <button class="btn btn-outline" id="publish-draw-btn-top">📢 Save &amp; Publish</button>
+            </div>
+          </div>
+          <div class="entry-filters">
+            <div class="fgroup">
+              <label class="flabel">Select Draw</label>
+              <select id="entry-draw-select" class="finput"></select>
+            </div>
+            <button class="btn btn-gold" id="load-entry-btn">Load Draw</button>
+            <button class="btn btn-outline" id="open-bulk-paste-btn" style="margin-left:auto">⚡ Quick Bulk Result Text
+              Paste</button>
+          </div>
+          <div id="prize-entry-area"></div>
+          <div id="entry-actions" style="display:none" class="entry-actions">
+            <button class="btn btn-gold" id="save-prizes-btn">💾 Save Results</button>
+            <button class="btn btn-outline" id="publish-draw-btn">📢 Save &amp; Publish</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── RESULTS PANEL ── -->
+      <div class="panel" id="panel-results">
+        <div class="results-filter glass-card">
+          <div class="fgroup">
+            <label class="flabel">Lottery</label>
+            <select id="res-lottery-filter" class="finput"></select>
+          </div>
+          <div class="fgroup">
+            <label class="flabel">Date</label>
+            <input type="date" id="res-date-filter" class="finput" />
+          </div>
+          <div class="fgroup">
+            <label class="flabel">Status</label>
+            <select id="res-status-filter" class="finput">
+              <option value="">All</option>
+              <option value="draft">Draft</option>
+              <option value="published">Published</option>
+            </select>
+          </div>
+          <div class="fgroup">
+            <label class="flabel">Date Sort</label>
+            <select id="res-sort-order" class="finput">
+              <option value="desc">📅 Newest First</option>
+              <option value="asc">📅 Oldest First</option>
+            </select>
+          </div>
+          <div class="fgroup" style="min-width:auto;flex:0">
+            <label class="flabel">Layout</label>
+            <div class="view-mode-toggle" id="toggle-res-layout" title="Arrange Results Layout">
+              <button type="button" class="view-mode-btn active" data-layout="cols" title="Column Grid view">☵ Columns</button>
+              <button type="button" class="view-mode-btn" data-layout="rows" title="Horizontal Row view">☰ Rows</button>
+            </div>
+          </div>
+          <button class="btn btn-gold" id="load-res-btn">Search</button>
+          <button class="btn btn-outline" id="export-res-btn">⬇ Export</button>
+        </div>
+        <div id="results-cards-grid"></div>
+      </div>
+
+      <!-- ── CSV PANEL ── -->
+      <div class="panel" id="panel-csv">
+        <div class="glass-card csv-card">
+          <h3 class="card-title">📤 Bulk Result Import (CSV)</h3>
+          <div class="csv-fmt-box">
+            <h4>CSV Format</h4>
+            <pre class="codebox">draw_no,lottery_name,draw_date,publish_date,prize_rank,prize_name,prize_amount,winning_numbers,series
+BT-891,Bhagyathara,2026-10-06,2026-10-06,1,1st Prize,7500000,345678,A
+BT-891,Bhagyathara,2026-10-06,2026-10-06,2,2nd Prize,500000,234567,ALL
+BT-891,Bhagyathara,2026-10-06,2026-10-06,C,Consolation,8000,345678,"B,C,D,E,F,G"</pre>
+            <button class="btn btn-sm btn-ghost" id="dl-template-btn">⬇ Download Template</button>
+          </div>
+          <div class="drop-zone" id="drop-zone">
+            <input type="file" id="csv-input" accept=".csv" style="display:none" />
+            <div class="dz-icon">📁</div>
+            <p>Drag &amp; drop CSV file here</p>
+            <span class="or-sep">or</span>
+            <button class="btn btn-outline" id="browse-csv-btn">Browse File</button>
+          </div>
+          <div id="csv-preview" class="hidden">
+            <h4>Preview</h4>
+            <div id="csv-preview-wrap" class="table-wrap"></div>
+            <div id="csv-summary-box" class="csv-summary"></div>
+            <div class="entry-actions">
+              <button class="btn btn-gold" id="confirm-csv-btn">✓ Import</button>
+              <button class="btn btn-ghost" id="cancel-csv-btn">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── NOTIFICATIONS PANEL ── -->
+      <div class="panel" id="panel-notifications">
+        <div class="panel-bar">
+          <button class="btn btn-gold" id="send-notif-btn">📢 Send Notification</button>
+          <button class="btn btn-outline" id="clear-notif-btn">Clear All</button>
+        </div>
+        <div id="notif-list" class="notif-list"></div>
+      </div>
+
+      <!-- ── LOTTERY TYPES MANAGEMENT PANEL ── -->
+      <div class="panel" id="panel-lottery-types">
+        <div class="panel-bar">
+          <select id="lt-table-sort-order" class="finput sm" title="Sort Lottery Schemes">
+            <option value="day">📅 Weekly Day Order (Mon ➔ Sun)</option>
+            <option value="name">🅰️ Name (A ➔ Z)</option>
+            <option value="prize">💰 1st Prize (High ➔ Low)</option>
+          </select>
+          <button class="btn btn-outline" id="add-same-day-lottery-btn" title="Add multiple lottery schemes on the same draw day">📅 Add Same Day Lotteries</button>
+          <button class="btn btn-gold" id="add-lottery-type-btn">➕ Add New Lottery Type</button>
+        </div>
+        <div class="glass-card">
+          <div class="card-hdr">
+            <div>
+              <h3 class="card-title">🎟 Manage Kerala Lottery Types &amp; Schemes</h3>
+              <p style="color:var(--text2);font-size:13px;margin-top:2px">Add new lottery schemes (Bumper, Weekly,
+                Special Draws) or edit existing active lotteries.</p>
+            </div>
+          </div>
+          <div class="table-wrap no-scrollbar">
+            <table class="dtable" style="width:100%">
+              <thead>
+                <tr>
+                  <th style="width:45px;text-align:center">Color</th>
+                  <th style="width:90px">Code</th>
+                  <th>Lottery Scheme Name</th>
+                  <th style="width:145px">Draw Day</th>
+                  <th style="width:125px">1st Prize</th>
+                  <th style="width:95px;text-align:center">Status</th>
+                  <th style="width:205px;text-align:right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="lottery-types-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── ACCOUNT SETTINGS PANEL ── -->
+      <div class="panel" id="panel-settings">
+        <div class="glass-card" style="max-width:640px">
+          <div class="card-hdr">
+            <div>
+              <h3 class="card-title">🔐 Administrator Account &amp; Password Settings</h3>
+              <p style="color:var(--text2);font-size:13px;margin-top:2px">Manage your administrator username, display name, and login password.</p>
+            </div>
+          </div>
+          <form id="settings-panel-form" style="display:flex;flex-direction:column;gap:18px;margin-top:14px">
+            <div class="fgroup">
+              <label class="flabel">Administrator Name</label>
+              <div class="input-wrap">
+                <span class="iico">👤</span>
+                <input type="text" id="panel-acc-name" class="finput" required placeholder="Admin Officer" />
+              </div>
+            </div>
+            <div class="fgroup">
+              <label class="flabel">Username (Login ID)</label>
+              <div class="input-wrap">
+                <span class="iico">🏷️</span>
+                <input type="text" id="panel-acc-user" class="finput" required placeholder="admin" />
+              </div>
+            </div>
+            <div class="fgroup">
+              <label class="flabel">New Password</label>
+              <div class="input-wrap">
+                <span class="iico">🔒</span>
+                <input type="password" id="panel-acc-pass" class="finput" required placeholder="Enter new password" minlength="4" />
+                <button type="button" class="pw-eye" id="panel-pw-toggle">👁</button>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;margin-top:8px">
+              <button type="submit" class="btn btn-gold">💾 Save Credentials</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- ── GOOGLE ADS & MONETIZATION SETTINGS ── -->
+        <div class="glass-card" style="max-width:640px;margin-top:20px">
+          <div class="card-hdr">
+            <div>
+              <h3 class="card-title">📢 Google Ads &amp; Monetization Settings</h3>
+              <p style="color:var(--text2);font-size:13px;margin-top:2px">Configure Google AdSense &amp; Mobile Ad banners to monetize your lottery result portal &amp; APK.</p>
+            </div>
+            <span class="badge" id="ads-status-badge" style="background:rgba(16,185,129,0.2);color:var(--green-l);font-size:12px">Active</span>
+          </div>
+          <form id="form-ads-settings" style="display:flex;flex-direction:column;gap:16px;margin-top:14px">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <label style="display:flex;align-items:center;gap:10px;cursor:pointer;background:var(--bg2);padding:10px 14px;border-radius:var(--r);border:1px solid var(--border)">
+                <input type="checkbox" id="ad-cfg-enabled" checked style="width:18px;height:18px;accent-color:var(--gold)" />
+                <span style="font-size:13px;font-weight:600">Enable Google Ads</span>
+              </label>
+              <label style="display:flex;align-items:center;gap:10px;cursor:pointer;background:var(--bg2);padding:10px 14px;border-radius:var(--r);border:1px solid var(--border)">
+                <input type="checkbox" id="ad-cfg-testmode" checked style="width:18px;height:18px;accent-color:var(--gold)" />
+                <span style="font-size:13px;font-weight:600" title="Shows placeholder test ads to avoid policy violations during testing">Test Ad Mode</span>
+              </label>
+            </div>
+
+            <div class="fgroup">
+              <label class="flabel">Google AdSense Publisher ID (Client ID)</label>
+              <div class="input-wrap">
+                <span class="iico">🆔</span>
+                <input type="text" id="ad-cfg-pubid" class="finput mono" placeholder="ca-pub-1234567890123456" />
+              </div>
+              <small style="color:var(--text3);font-size:11px">From your Google AdSense account (starts with ca-pub-)</small>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <div class="fgroup">
+                <label class="flabel">Top Banner Ad Slot ID</label>
+                <input type="text" id="ad-cfg-slot-top" class="finput mono" placeholder="1234567890" />
+              </div>
+              <div class="fgroup">
+                <label class="flabel">Mid-Content Ad Slot ID</label>
+                <input type="text" id="ad-cfg-slot-middle" class="finput mono" placeholder="2345678901" />
+              </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <div class="fgroup">
+                <label class="flabel">Gazette Result Ad Slot ID</label>
+                <input type="text" id="ad-cfg-slot-indiv" class="finput mono" placeholder="3456789012" />
+              </div>
+              <div class="fgroup">
+                <label class="flabel">Sticky Bottom Ad Slot ID</label>
+                <input type="text" id="ad-cfg-slot-sticky" class="finput mono" placeholder="4567890123" />
+              </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <label style="display:flex;align-items:center;gap:10px;cursor:pointer;background:var(--bg2);padding:10px 14px;border-radius:var(--r);border:1px solid var(--border)">
+                <input type="checkbox" id="ad-cfg-sticky" checked style="width:18px;height:18px;accent-color:var(--gold)" />
+                <span style="font-size:13px;font-weight:600">Sticky Bottom Ad</span>
+              </label>
+              <label style="display:flex;align-items:center;gap:10px;cursor:pointer;background:var(--bg2);padding:10px 14px;border-radius:var(--r);border:1px solid var(--border)">
+                <input type="checkbox" id="ad-cfg-interstitial" style="width:18px;height:18px;accent-color:var(--gold)" />
+                <span style="font-size:13px;font-weight:600" title="Shows an ad before checking results">Ad on Result Check</span>
+              </label>
+            </div>
+
+            <div style="display:flex;gap:10px;margin-top:8px">
+              <button type="submit" class="btn btn-gold">💾 Save Ad Settings</button>
+              <button type="button" class="btn btn-outline" id="btn-preview-ads">⚡ Refresh &amp; Preview Ads</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- ── CLOUD SYNC SETTINGS (AUTOMATIC WEBSITE <-> ANDROID APK CONNECT) ── -->
+        <div class="glass-card" style="max-width:640px;margin-top:20px">
+          <div class="card-hdr">
+            <div>
+              <h3 class="card-title">🌐 Website &amp; APK Cloud Real-Time Sync</h3>
+              <p style="color:var(--text2);font-size:13px;margin-top:2px">Connect website &amp; Android APK so any published results or updates instantly appear in both without reinstalling APK.</p>
+            </div>
+            <span class="badge" id="cloud-sync-status-badge" style="background:rgba(212,169,65,0.2);color:var(--gold-l);font-size:12px">Local Standalone</span>
+          </div>
+          <form id="form-cloud-sync" style="display:flex;flex-direction:column;gap:16px;margin-top:14px">
+            <div class="fgroup">
+              <label class="flabel">Cloud Sync Mode</label>
+              <select id="cloud-sync-mode" class="finput">
+                <option value="firebase">🔥 Firebase Realtime Database (Free &amp; Recommended)</option>
+                <option value="jsonapi">🌐 Custom REST API / Webhook (URL Endpoint)</option>
+                <option value="disabled">🚫 Local Storage Only (No Cloud Sync)</option>
+              </select>
+            </div>
+
+            <!-- Firebase Configuration block -->
+            <div id="cfg-firebase-block" style="display:flex;flex-direction:column;gap:12px">
+              <div class="fgroup">
+                <label class="flabel">Firebase Realtime Database URL</label>
+                <div class="input-wrap">
+                  <span class="iico">🔗</span>
+                  <input type="url" id="cloud-fb-url" class="finput mono" placeholder="https://avtr-899ee-default-rtdb.firebaseio.com" value="https://avtr-899ee-default-rtdb.firebaseio.com" />
+                </div>
+                <small style="color:var(--text3);font-size:11px">Firebase Realtime Database: <b>avtr-899ee</b> (Connected &amp; Active)</small>
+              </div>
+              <div class="fgroup">
+                <label class="flabel">Database Secret / Auth Key (Optional if rules are public read/write)</label>
+                <div class="input-wrap">
+                  <span class="iico">🔑</span>
+                  <input type="password" id="cloud-fb-secret" class="finput mono" placeholder="Optional secret key" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Custom JSON Endpoint block -->
+            <div id="cfg-jsonapi-block" style="display:none;flex-direction:column;gap:12px">
+              <div class="fgroup">
+                <label class="flabel">Custom Cloud API / Sync URL</label>
+                <div class="input-wrap">
+                  <span class="iico">🌐</span>
+                  <input type="url" id="cloud-api-url" class="finput mono" placeholder="https://example.com/api/lottery-sync" />
+                </div>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:10px;margin-top:8px;flex-wrap:wrap">
+              <button type="submit" class="btn btn-gold">💾 Save Cloud Config</button>
+              <button type="button" class="btn btn-primary" id="btn-cloud-push-now">⬆️ Push Local Data to Cloud</button>
+              <button type="button" class="btn btn-outline" id="btn-cloud-pull-now">⬇️ Pull from Cloud Now</button>
+            </div>
+            <div id="cloud-sync-log" style="font-size:12px;color:var(--text2);background:var(--bg2);padding:8px 12px;border-radius:var(--r);font-family:monospace;display:none"></div>
+          </form>
+        </div>
+      </div>
+
+      <!-- ── MOBILE APP & CLOUD SYNC PANEL ── -->
+      <div class="panel" id="panel-mobile-sync">
+        <div class="panel-header-desc" style="margin-bottom:20px">
+          <h2 style="font-size:22px;font-weight:800;color:var(--text)">📱 Mobile App Synchronization &amp; Live Updates</h2>
+          <p style="color:var(--text2);font-size:14px;margin-top:4px">Configure real-time sync with the Android APK, edit live index page announcements, and manage mobile app updates.</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:20px">
+          <!-- Card 1: Cloud Sync Status & Instant Mobile Push -->
+          <div class="glass-card">
+            <div class="card-hdr">
+              <div>
+                <h3 class="card-title">🔥 Real-Time Mobile Broadcast</h3>
+                <p style="color:var(--text2);font-size:13px;margin-top:2px">Push latest lottery results and draw changes instantly to all installed Android mobile apps.</p>
+              </div>
+              <span class="badge" id="mobile-sync-status-pill" style="background:rgba(16,185,129,0.2);color:var(--green-l);font-size:12px">Connected</span>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:14px;margin-top:16px">
+              <div style="background:var(--bg2);padding:12px;border-radius:var(--r);border:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+                <div>
+                  <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px">Cloud Sync Engine</div>
+                  <div style="font-size:14px;font-weight:700;color:var(--gold-l);margin-top:2px" id="mobile-sync-engine-label">Firebase Realtime DB</div>
+                </div>
+                <div>
+                  <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px">Total Draws</div>
+                  <div style="font-size:14px;font-weight:700;color:var(--text);margin-top:2px" id="mobile-sync-draws-count">0</div>
+                </div>
+              </div>
+
+              <div style="font-size:12px;color:var(--text2)">
+                Last Broadcast: <b id="mobile-sync-last-time" style="color:var(--text)">Just now</b>
+              </div>
+
+              <div style="display:flex;gap:10px;flex-wrap:wrap">
+                <button type="button" class="btn btn-gold" id="btn-mobile-sync-push-all" style="flex:1;min-width:140px">
+                  ⚡ Push All to Mobile App
+                </button>
+                <button type="button" class="btn btn-outline" id="btn-mobile-sync-pull-all" style="flex:1;min-width:140px">
+                  🔄 Pull from Cloud
+                </button>
+              </div>
+              <small style="color:var(--text3);font-size:11px">Any draw you add or publish on the dashboard automatically broadcasts to mobile apps within seconds.</small>
+            </div>
+          </div>
+
+          <!-- Card 2: Live Index Page Notice / Announcement -->
+          <div class="glass-card">
+            <div class="card-hdr">
+              <div>
+                <h3 class="card-title">📢 Live Notice Banner (Index Page)</h3>
+                <p style="color:var(--text2);font-size:13px;margin-top:2px">Edit the announcement banner shown at the top of the mobile app and website.</p>
+              </div>
+            </div>
+
+            <form id="form-live-notice" style="display:flex;flex-direction:column;gap:12px;margin-top:14px">
+              <div class="fgroup">
+                <label class="flabel">Badge Tag</label>
+                <div class="input-wrap">
+                  <span class="iico">🏷️</span>
+                  <input type="text" id="inp-notice-badge" class="finput" placeholder="e.g. 🔴 LIVE DRAW or 📢 ANNOUNCEMENT" value="🔴 LIVE UPDATE" />
+                </div>
+              </div>
+              <div class="fgroup">
+                <label class="flabel">Announcement Message</label>
+                <textarea id="inp-notice-text" class="finput" rows="3" placeholder="Enter headline or live result announcement to display on the mobile app index page">Official Kerala State Lottery draw results updated in real-time. Check today's winning numbers.</textarea>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px">
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--text)">
+                  <input type="checkbox" id="chk-notice-active" checked style="accent-color:var(--gold)" />
+                  <span>Show announcement on Mobile App &amp; Index Page</span>
+                </label>
+              </div>
+              <button type="submit" class="btn btn-gold" style="margin-top:4px">
+                💾 Save &amp; Broadcast Notice to Mobile App
+              </button>
+            </form>
+          </div>
+
+          <!-- Card 3: Mobile App Environment & Remote Server URL -->
+          <div class="glass-card">
+            <div class="card-hdr">
+              <div>
+                <h3 class="card-title">🌐 Live Web Server / Hosted App URL</h3>
+                <p style="color:var(--text2);font-size:13px;margin-top:2px">Configure a live website or server URL so the mobile app always shows direct index page edits live.</p>
+              </div>
+              <span class="badge" id="mobile-env-badge" style="background:rgba(59,130,246,0.2);color:var(--blue-l);font-size:12px">Web Browser</span>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:14px;margin-top:14px">
+              <div class="fgroup">
+                <label class="flabel">Live Web URL (Optional)</label>
+                <div class="input-wrap">
+                  <span class="iico">🔗</span>
+                  <input type="url" id="inp-mobile-server-url" class="finput mono" placeholder="https://keralalottery.firebaseapp.com or http://192.168.1.10:5500" />
+                </div>
+                <small style="color:var(--text3);font-size:11px">If configured, the Android APK loads this live URL directly. If left blank or offline, it loads bundled offline assets.</small>
+              </div>
+
+              <div style="display:flex;gap:10px;flex-wrap:wrap">
+                <button type="button" class="btn btn-primary" id="btn-save-server-url">💾 Save Server URL</button>
+                <button type="button" class="btn btn-ghost" id="btn-reset-server-url">Reset to Local Offline</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4: Android APK Build & File Sync Guide -->
+          <div class="glass-card">
+            <div class="card-hdr">
+              <div>
+                <h3 class="card-title">📦 Android APK 1-Click Sync &amp; Build</h3>
+                <p style="color:var(--text2);font-size:13px;margin-top:2px">When editing index.html, style.css, or app.js locally on your computer:</p>
+              </div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:12px;margin-top:14px;font-size:13px;color:var(--text2)">
+              <div style="background:var(--bg2);padding:12px;border-radius:var(--r);border:1px solid var(--border)">
+                <div style="font-weight:700;color:var(--gold-l);margin-bottom:6px">⚡ 1-Click Scripts in Project Folder:</div>
+                <ul style="padding-left:18px;line-height:1.7;margin:0">
+                  <li><b>sync-to-android.bat</b> &mdash; Copies all web edits (<code style="color:var(--gold-l)">index.html</code>, css, js) into Android assets immediately.</li>
+                  <li><b>build-apk.bat</b> &mdash; Syncs all web files and compiles <code style="color:var(--green-l)">KeralaLottery-debug.apk</code> automatically.</li>
+                  <li><b>auto-sync.bat</b> &mdash; Watches for any file changes and syncs them automatically in real time!</li>
+                </ul>
+              </div>
+
+              <div style="display:flex;align-items:center;justify-content:space-between;background:rgba(212,169,65,0.08);border:1px solid rgba(212,169,65,0.25);padding:10px 14px;border-radius:var(--r)">
+                <div>
+                  <div style="font-weight:700;color:var(--text)">Current APK: <span style="color:var(--gold-l)">KeralaLottery-debug.apk</span></div>
+                  <div style="font-size:11px;color:var(--text3)">Ready in project folder to install on any Android device</div>
+                </div>
+                <span class="badge" style="background:rgba(16,185,129,0.2);color:var(--green-l);font-size:12px">Ready</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </section>
+
+  <!-- ============================================================
+     PUBLIC PORTAL
+============================================================ -->
+  <section id="page-public" class="page active">
+    <header class="pub-header">
+      <div class="pub-brand">
+        <img src="icon-192.png" alt="Kerala Lottery" class="pub-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-block'" />
+        <span class="pub-emblem" style="display:none">🐘</span>
+        <div>
+          <div class="pub-title">Kerala Lottery Results</div>
+          <div class="pub-sub">Official Result Portal</div>
+        </div>
+      </div>
+      <div class="pub-header-right" style="display:flex;align-items:center;gap:10px">
+        <button class="btn btn-sm btn-ghost" id="pub-sync-status-btn" title="Cloud Sync Status: Click to Sync Latest Results" style="font-size:12px;display:flex;align-items:center;gap:5px;border:1px solid rgba(255,255,255,0.1)">
+          <span id="pub-sync-indicator" style="width:8px;height:8px;border-radius:50%;background:#10B981;display:inline-block"></span>
+          <span id="pub-sync-text">Live Sync</span>
+        </button>
+        <button class="btn btn-sm btn-gold" id="btn-goto-dashboard" title="Open Officer / Admin Dashboard" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:6px 12px">
+          ⚙️ <span>Dashboard</span>
+        </button>
+        <div class="theme-switcher">
+          <select class="theme-select finput sm" id="theme-select-public" title="Choose Design Theme">
+            <option value="dark">🌙 Dark Sapphire</option>
+            <option value="light">☀️ Clean Light</option>
+            <option value="emerald">🌿 Emerald Gold</option>
+          </select>
+        </div>
+      </div>
+    </header>
+
+    <main class="pub-main">
+      <!-- Live Kerala Lottery Announcement & Real-Time Notice -->
+      <div class="live-notice-banner" id="pub-live-notice" style="display:none">
+        <div class="live-notice-badge" id="pub-notice-badge">🔴 LIVE UPDATE</div>
+        <div class="live-notice-text" id="pub-notice-text">Official Kerala State Lottery draw results updated in real-time. Check today's winning numbers.</div>
+        <button type="button" class="live-notice-refresh" id="pub-notice-refresh" title="Refresh Live Data">🔄 Refresh</button>
+      </div>
+      <!-- Top Leaderboard / Responsive Ad Slot -->
+      <div class="ad-container ad-top" id="ad-container-top" data-slot="top">
+        <div class="ad-label">Advertisement</div>
+        <div class="ad-wrapper" id="ad-slot-top"></div>
+      </div>
+
+      <!-- Ticket Checker -->
+      <div class="checker-card glass-card">
+        <div class="checker-header">
+          <h2 class="checker-title">🎟 Kerala Lottery Result</h2>
+          <p class="checker-sub">Enter your 2-digit series number and 6-digit winning ticket number (or 4-digit winning number / decimal value) to verify official results instantly</p>
+        </div>
+        <!-- User friendly steps guide -->
+        <div class="checker-steps">
+          <div class="step-chip"><span class="step-num">1</span> Pick Lottery (Optional)</div>
+          <div class="step-chip"><span class="step-num">2</span> Draw Date (Optional)</div>
+          <div class="step-chip"><span class="step-num">3</span> 2-Digit Series (Manual)</div>
+          <div class="step-chip"><span class="step-num">4</span> 6-Digit Winning No</div>
+          <div class="step-chip"><span class="step-num">5</span> Verify Result</div>
+        </div>
+        <div class="checker-form">
+          <select id="checker-lottery" class="finput lg" title="Select Lottery Scheme (Optional)"></select>
+          <input type="date" id="checker-date" class="finput lg" title="Select Draw Date (Optional)" />
+          <input type="text" id="checker-series" class="finput lg mono" placeholder="Series (e.g. BT)" maxlength="4" style="text-transform:uppercase" autocomplete="off" spellcheck="false" title="Manual enter 2-digit series code (e.g. BT, SS, DL)" />
+          <input type="text" id="checker-number" class="finput lg mono" placeholder="6-digit ticket (e.g. 886602)" maxlength="15" title="Enter 6-digit ticket or 4-digit winning number" />
+          <button class="btn btn-gold btn-lg" id="check-btn">🔍 Verify Result</button>
+        </div>
+
+        <!-- QR Action Bar -->
+        <div class="qr-action-bar">
+          <button type="button" class="btn btn-outline" id="btn-open-qr-scanner">
+            📱 Scan Ticket QR Code
+          </button>
+        </div>
+
+        <div id="checker-result"></div>
+      </div>
+
+      <!-- Mid-Content In-Feed Ad Slot -->
+      <div class="ad-container ad-middle" id="ad-container-middle" data-slot="middle">
+        <div class="ad-label">Sponsored</div>
+        <div class="ad-wrapper" id="ad-slot-middle"></div>
+      </div>
+
+      <!-- Latest Results -->
+      <div class="latest-section">
+        <div class="latest-hdr">
+          <h3>📋 Latest Results</h3>
+          <div class="latest-filters">
+            <select id="pub-lottery-filter" class="finput sm"></select>
+            <input type="date" id="pub-date-filter" class="finput sm" />
+            <select id="pub-sort-order" class="finput sm" title="Sort Results Date-Wise">
+              <option value="desc">📅 Newest First</option>
+              <option value="asc">📅 Oldest First</option>
+            </select>
+            <button class="btn btn-sm btn-gold" id="pub-filter-btn">Filter</button>
+            <div class="view-mode-toggle" id="toggle-pub-layout" title="Arrange Results Layout">
+              <button type="button" class="view-mode-btn active" data-layout="cols" title="Column Grid view">☵ Columns</button>
+              <button type="button" class="view-mode-btn" data-layout="rows" title="Horizontal Row view">☰ Rows</button>
+            </div>
+            <button class="btn btn-sm btn-outline" id="pub-refresh-btn" title="Refresh Latest Results">🔄 Refresh</button>
+            <button class="btn btn-sm btn-ghost" id="pub-clear-filter-btn" title="Reset Filters and Show All Results">Reset</button>
+          </div>
+        </div>
+        <div id="pub-results-grid"></div>
+      </div>
+
+      <!-- All Lotteries Ribbon -->
+      <div class="lottery-ribbon">
+        <div id="ribbon-items"></div>
+      </div>
+    </main>
+
+    <!-- Official Portal Footer -->
+    <footer class="pub-footer" style="padding:24px 16px;text-align:center;border-top:1px solid var(--border);color:var(--text3);font-size:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;max-width:1100px;margin:32px auto 0 auto">
+      <div>Kerala State Lotteries &bull; Directorate of Kerala State Lotteries &copy; 2026</div>
+      <div>
+        <a href="#admin" style="color:var(--gold-l);text-decoration:none;font-size:12px;display:inline-flex;align-items:center;gap:4px" title="Official Administration Portal">⚙️ Official Admin Access</a>
+      </div>
+    </footer>
+
+    <!-- Mobile Bottom Quick Navigation Bar (Active on phones & APK) -->
+    <nav class="mobile-nav-bar" id="mobile-nav-bar">
+      <button type="button" class="mob-nav-btn active" id="mob-nav-public" onclick="showPublicPortal()">
+        <span class="mob-nav-icon">🎟️</span>
+        <span class="mob-nav-label">Results</span>
+      </button>
+      <button type="button" class="mob-nav-btn" id="mob-nav-scan" onclick="document.getElementById('btn-open-qr-scanner')?.click()">
+        <span class="mob-nav-icon">📷</span>
+        <span class="mob-nav-label">Scan QR</span>
+      </button>
+      <button type="button" class="mob-nav-btn" id="mob-nav-sync" onclick="document.getElementById('pub-sync-status-btn')?.click()">
+        <span class="mob-nav-icon">🔄</span>
+        <span class="mob-nav-label">Live Sync</span>
+      </button>
+      <button type="button" class="mob-nav-btn" id="mob-nav-dashboard" onclick="location.hash='#admin'">
+        <span class="mob-nav-icon">⚙️</span>
+        <span class="mob-nav-label">Dashboard</span>
+      </button>
+    </nav>
+  </section>
+
+  <!-- ============================================================
+     INDIVIDUAL RESULT PAGE
+============================================================ -->
+  <section id="page-individual-result" class="page">
+    <header class="pub-header">
+      <div class="pub-brand">
+        <button class="btn btn-sm btn-outline" id="btn-back-to-public"
+          style="display:inline-flex;align-items:center;gap:6px">
+          ← Back to Results
+        </button>
+        <div style="display:flex;align-items:center;gap:10px;margin-left:8px;cursor:pointer" id="btn-indiv-home-brand" title="Back to Results Portal">
+          <img src="icon-192.png" alt="Kerala Lottery" class="pub-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-block'" />
+          <span class="pub-emblem" style="display:none">🐘</span>
+          <div>
+            <div class="pub-title" id="indiv-top-title">Kerala Lottery Result</div>
+            <div class="pub-sub" id="indiv-top-sub">Official Gazette Publication</div>
+          </div>
+        </div>
+      </div>
+      <div class="pub-header-right">
+        <div class="theme-switcher">
+          <select class="theme-select finput sm" id="theme-select-indiv" title="Choose Design Theme">
+            <option value="dark">🌙 Dark Sapphire</option>
+            <option value="light">☀️ Clean Light</option>
+            <option value="emerald">🌿 Emerald Gold</option>
+          </select>
+        </div>
+        <button class="btn btn-sm btn-ghost" id="btn-share-indiv" title="Copy shareable link">🔗 Share</button>
+        <button class="btn btn-sm btn-outline" id="btn-print-indiv">🖨 Print Result</button>
+        <button class="btn btn-sm btn-gold" id="btn-pdf-indiv">⬇ Download PDF</button>
+      </div>
+    </header>
+
+    <main class="pub-main" style="max-width:1100px;margin:0 auto;width:100%">
+      <!-- Individual Gazette Top Ad Slot -->
+      <div class="ad-container ad-indiv" id="ad-container-indiv" data-slot="indiv">
+        <div class="ad-label">Advertisement</div>
+        <div class="ad-wrapper" id="ad-slot-indiv"></div>
+      </div>
+
+      <div id="indiv-result-content"></div>
+    </main>
+  </section>
+
+  <!-- ============================================================
+     MODALS
+============================================================ -->
+  <div class="modal-bg" id="modal-bg"></div>
+
+  <!-- QR Code Scanner Modal -->
+  <div class="modal glass-card" id="modal-qr-scanner">
+    <div class="modal-hdr">
+      <h3>📱 Scan Kerala Lottery Ticket QR Code</h3>
+      <button class="mcls" data-close="modal-qr-scanner">✕</button>
+    </div>
+    <div class="qr-modal-body">
+      <p class="qr-modal-sub">Scan the QR code printed on your physical Kerala State Lottery ticket using your camera or
+        upload a ticket photo to find winning numbers instantly.</p>
+
+      <div id="qr-reader" class="qr-reader-box"></div>
+
+      <div class="qr-upload-sec">
+        <input type="file" id="qr-file-input" accept="image/*" style="display:none" />
+        <button type="button" class="btn btn-gold btn-full" id="btn-browse-qr-img">📷 Upload Ticket QR Image</button>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn btn-ghost" data-close="modal-qr-scanner">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Add/Edit Lottery Type Modal -->
+  <div class="modal glass-card" id="modal-lottery-type" style="max-width:620px">
+    <div class="modal-hdr" style="margin-bottom:12px">
+      <h3 id="lt-modal-title">Add New Lottery Type</h3>
+      <button class="mcls" data-close="modal-lottery-type">✕</button>
+    </div>
+    <form id="lt-form" class="mform" style="gap:11px">
+      <input type="hidden" id="lt-id-hidden" />
+      <div class="form-row">
+        <div class="fgroup">
+          <label class="flabel">Lottery ID (e.g. BM) *</label>
+          <input type="text" id="lt-id" class="finput mono sm" required placeholder="e.g. BM" maxlength="6" />
+        </div>
+        <div class="fgroup">
+          <label class="flabel">Short Code (e.g. BR) *</label>
+          <input type="text" id="lt-code" class="finput mono sm" required placeholder="e.g. BR" maxlength="6" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="fgroup" style="flex:1.5">
+          <label class="flabel">Lottery Scheme Name *</label>
+          <input type="text" id="lt-name" class="finput sm" required placeholder="e.g. Thiruvonam Bumper" />
+        </div>
+        <div class="fgroup" style="flex:1">
+          <label class="flabel">1st Prize Amount (₹) *</label>
+          <input type="number" step="any" id="lt-prize1" class="finput mono sm" required placeholder="e.g. 120000000" min="1000" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="fgroup" style="flex:1.2">
+          <label class="flabel">Draw Day / Schedule *</label>
+          <select id="lt-day" class="finput sm" required>
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+            <option value="Saturday">Saturday</option>
+            <option value="Sunday">Sunday</option>
+            <option value="Bumper Draw">Bumper Draw</option>
+            <option value="Special Draw">Special Draw</option>
+          </select>
+        </div>
+        <div class="fgroup" style="flex:0.8">
+          <label class="flabel">Theme Color *</label>
+          <input type="color" id="lt-color" class="finput sm" value="#D4A941"
+            style="height:38px;padding:2px;cursor:pointer" />
+        </div>
+        <div class="fgroup" style="flex:1.2">
+          <label class="flabel">Visibility Status</label>
+          <select id="lt-status" class="finput sm">
+            <option value="active">🟢 Active (Visible)</option>
+            <option value="hidden">🙈 Hidden</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-foot" style="margin-top:10px;flex-wrap:wrap">
+        <button type="button" class="btn btn-sm btn-ghost" style="color:#FC8181;border:1px solid rgba(220,53,69,.3);display:none" id="btn-modal-delete-lottery">🗑 Delete Scheme</button>
+        <button type="button" class="btn btn-sm btn-ghost" data-close="modal-lottery-type">Cancel</button>
+        <button type="button" class="btn btn-sm btn-outline" id="lt-save-and-add-same-day" title="Save this scheme and immediately add another lottery for the same day">➕ Save &amp; Add Same Day</button>
+        <button type="submit" class="btn btn-sm btn-gold">Save Lottery Type</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Add Multiple Lotteries for Same Day Modal -->
+  <div class="modal glass-card" id="modal-same-day-lotteries" style="max-width:800px">
+    <div class="modal-hdr" style="margin-bottom:12px">
+      <div>
+        <h3 style="font-size:16px">📅 Add Multiple Lottery Names on Same Day</h3>
+        <p style="color:var(--text2);font-size:12px;margin-top:2px">Register multiple official lottery schemes scheduled for the same draw day.</p>
+      </div>
+      <button class="mcls" data-close="modal-same-day-lotteries">✕</button>
+    </div>
+    <form id="same-day-form" class="mform" style="gap:10px">
+      <div class="fgroup" style="margin-bottom:6px">
+        <label class="flabel" style="font-weight:700;font-size:12.5px">Target Draw Day / Schedule *</label>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <select id="same-day-select" class="finput sm" style="max-width:220px" required>
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+            <option value="Saturday">Saturday</option>
+            <option value="Sunday">Sunday</option>
+            <option value="Bumper Draw">Bumper Draw</option>
+            <option value="Special Draw">Special Draw</option>
+          </select>
+          <div id="same-day-existing-badge" style="font-size:12px;color:var(--text2)"></div>
+        </div>
+      </div>
+
+      <div class="same-day-section-title" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+        <span style="font-size:12.5px;font-weight:700;color:var(--gold-l)">🎟 Multiple Lottery Schemes to Add:</span>
+        <button type="button" class="btn btn-sm btn-outline" id="btn-add-same-day-row">➕ Add Row</button>
+      </div>
+
+      <div id="same-day-rows-container" style="display:flex;flex-direction:column;gap:8px">
+        <!-- Dynamic Rows populated by JS -->
+      </div>
+
+      <div class="modal-foot" style="margin-top:12px">
+        <button type="button" class="btn btn-sm btn-ghost" data-close="modal-same-day-lotteries">Cancel</button>
+        <button type="submit" class="btn btn-sm btn-gold">💾 Save All Lotteries for this Day</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Draw Modal -->
+  <div class="modal glass-card" id="modal-draw">
+    <div class="modal-hdr">
+      <h3 id="draw-modal-title">New Draw</h3>
+      <button class="mcls" data-close="modal-draw">✕</button>
+    </div>
+    <form id="draw-form" class="mform">
+      <input type="hidden" id="d-id" />
+      <div class="form-row">
+        <div class="fgroup"><label class="flabel">Draw Number *</label><input type="text" id="d-no" class="finput"
+            required placeholder="W-891" /></div>
+        <div class="fgroup"><label class="flabel">Lottery Type *</label>
+          <select id="d-lottery" class="finput" required></select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="fgroup"><label class="flabel">Draw Date *</label><input type="date" id="d-date" class="finput"
+            required /></div>
+        <div class="fgroup"><label class="flabel">Publish Date *</label><input type="date" id="d-publish" class="finput"
+            required /></div>
+      </div>
+      <div class="fgroup"><label class="flabel">Venue</label><input type="text" id="d-venue" class="finput"
+          placeholder="Gorky Bhavan, Thiruvananthapuram" /></div>
+      <div class="fgroup">
+        <label class="flabel">Publication Status *</label>
+        <select id="d-status" class="finput">
+          <option value="published">📢 Published (Live on Public App Immediately)</option>
+          <option value="draft">📝 Draft (Save as Draft, Hidden from App)</option>
+        </select>
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="btn btn-ghost"
+          style="color:#FC8181;border:1px solid rgba(220,53,69,.3);display:none" id="btn-modal-delete-draw">🗑 Delete
+          Draw</button>
+        <button type="button" class="btn btn-ghost" data-close="modal-draw">Cancel</button>
+        <button type="submit" class="btn btn-gold">Save Draw</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Result Detail Modal (view full draw result) -->
+  <div class="modal glass-card modal-wide" id="modal-result-view">
+    <div class="modal-hdr">
+      <h3>Result Details</h3>
+      <div class="mhdr-actions">
+        <button class="btn btn-sm btn-outline" id="print-result-btn">🖨 Print</button>
+        <button class="btn btn-sm btn-gold" id="pdf-result-btn">⬇ PDF</button>
+        <button class="mcls" data-close="modal-result-view">✕</button>
+      </div>
+    </div>
+    <div id="result-view-content"></div>
+  </div>
+
+  <!-- Notification Modal -->
+  <div class="modal glass-card" id="modal-notif">
+    <div class="modal-hdr">
+      <h3>Send Notification</h3><button class="mcls" data-close="modal-notif">✕</button>
+    </div>
+    <form id="notif-form" class="mform">
+      <div class="fgroup"><label class="flabel">Title *</label><input type="text" id="nf-title" class="finput" required
+          placeholder="Bhagyathara BT-891 Results Published!" /></div>
+      <div class="fgroup"><label class="flabel">Message *</label><textarea id="nf-body" class="finput" rows="3" required
+          placeholder="The results for Bhagyathara BT-891 draw dated 06/10/2026 are now available."></textarea></div>
+      <div class="fgroup"><label class="flabel">Type</label>
+        <select id="nf-type" class="finput">
+          <option value="result">Result Published</option>
+          <option value="alert">General Alert</option>
+          <option value="update">System Update</option>
+        </select>
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="btn btn-ghost" data-close="modal-notif">Cancel</button>
+        <button type="submit" class="btn btn-gold">📢 Send</button>
+      </div>
+    </form>
+    <!-- Bulk Result Text Paste & Series Box Modal -->
+    <div class="modal glass-card modal-wide" id="modal-bulk-paste">
+      <div class="modal-hdr">
+        <h3>⚡ Bulk Result Update &amp; Importer</h3>
+        <button class="mcls" data-close="modal-bulk-paste">✕</button>
+      </div>
+      <div class="mform">
+        <!-- Option A: Series Box + Number Box -->
+        <div
+          style="background:rgba(255,255,255,0.03);border:1px solid var(--border-color);border-radius:12px;padding:16px;margin-bottom:16px">
+          <h4 style="margin:0 0 12px 0;color:var(--gold-l);font-size:15px;display:flex;align-items:center;gap:8px">
+            <span>📦</span> Quick Series &amp; Numbers Box Update
+          </h4>
+          <div class="form-row" style="margin-bottom:12px">
+            <div class="fgroup" style="flex:1">
+              <label class="flabel">Target Prize Rank *</label>
+              <select id="bulk-target-rank" class="finput">
+                <option value="1">1st Prize</option>
+                <option value="C">Consolation Prize</option>
+                <option value="2">2nd Prize</option>
+                <option value="3">3rd Prize</option>
+                <option value="4">4th Prize</option>
+                <option value="5">5th Prize</option>
+                <option value="6">6th Prize</option>
+                <option value="7">7th Prize</option>
+                <option value="8">8th Prize</option>
+              </select>
+            </div>
+            <div class="fgroup" style="flex:2">
+              <label class="flabel">Series Box (e.g. BT, BN, BS, SS, DL)</label>
+              <input type="text" id="bulk-series-input" class="finput mono"
+                placeholder="e.g. BT, BN, BS (separated by comma/space)" style="text-transform:uppercase" />
+            </div>
+          </div>
+          <div class="fgroup">
+            <label class="flabel">Winning Ticket Numbers Box (e.g. 886602, 774822 or 0101 0575)</label>
+            <textarea id="bulk-numbers-input" class="finput mono" rows="3"
+              placeholder="Enter or paste numbers separated by spaces, commas, or newlines...&#10;e.g. 886602 774822 918234 or BT 886602 (GURUVAYOOR)"></textarea>
+          </div>
+          <button type="button" class="btn btn-gold" id="btn-apply-box-paste" style="width:100%;margin-top:8px">⚡ Save
+            &amp; Apply Series &amp; Numbers to Rank</button>
+        </div>
+
+        <!-- Option B: Full Gazette Text Paste -->
+        <div
+          style="background:rgba(255,255,255,0.03);border:1px solid var(--border-color);border-radius:12px;padding:16px">
+          <h4 style="margin:0 0 12px 0;color:var(--text);font-size:15px;display:flex;align-items:center;gap:8px">
+            <span>📑</span> Or Paste Full Official Gazette Result Text
+          </h4>
+          <textarea id="bulk-paste-text" class="finput mono" rows="5"
+            placeholder="Paste full result gazette text here...&#10;e.g. 1st Prize Rs :10000000/- 1) BT 886602 (GURUVAYOOR)&#10;Cons Prize-Rs :5000/- BN 886602 BO 886602...&#10;4th Prize-Rs :5000/- 0101 0575 0653 0820 0971..."></textarea>
+          <button type="button" class="btn btn-outline" id="btn-apply-bulk-paste" style="width:100%;margin-top:10px">⚡
+            Extract &amp; Apply All Gazette Text</button>
+        </div>
+
+        <div class="modal-foot" style="margin-top:16px">
+          <button type="button" class="btn btn-ghost" data-close="modal-bulk-paste">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Account Settings & Change Password Modal -->
+    <div class="modal glass-card" id="modal-account-settings">
+      <div class="modal-hdr">
+        <h3>🔐 Account Settings &amp; Password</h3>
+        <button class="mcls" data-close="modal-account-settings">✕</button>
+      </div>
+      <form id="form-account-settings" style="display:flex;flex-direction:column;gap:14px">
+        <div class="fgroup">
+          <label class="flabel">Display Name</label>
+          <input type="text" id="acc-name" class="finput" required placeholder="Administrator Name" />
+        </div>
+        <div class="fgroup">
+          <label class="flabel">Username</label>
+          <input type="text" id="acc-user" class="finput" required placeholder="admin" />
+        </div>
+        <div class="fgroup">
+          <label class="flabel">Password</label>
+          <div class="input-wrap">
+            <span class="iico">🔒</span>
+            <input type="password" id="acc-pass" class="finput" required placeholder="Enter new password" minlength="4" />
+            <button type="button" class="pw-eye" id="acc-pw-toggle">👁</button>
+          </div>
+        </div>
+        <div class="modal-foot" style="margin-top:12px">
+          <button type="button" class="btn btn-ghost" data-close="modal-account-settings">Cancel</button>
+          <button type="submit" class="btn btn-gold">💾 Save Credentials</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Interstitial Ad Modal -->
+    <div class="modal glass-card modal-interstitial" id="modal-interstitial-ad" style="max-width:540px;text-align:center">
+      <div class="modal-hdr" style="justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="ad-test-badge">Sponsored</span>
+          <span style="font-size:12px;color:var(--text2)">Official Ad Break</span>
+        </div>
+        <button type="button" class="btn btn-sm btn-ghost" id="btn-close-interstitial" disabled>Skip in 3s...</button>
+      </div>
+      <div style="padding:16px 8px;display:flex;flex-direction:column;align-items:center;gap:12px">
+        <div class="ad-wrapper" id="ad-slot-interstitial" style="min-height:220px;width:100%"></div>
+      </div>
+    </div>
+
+    <!-- Sticky Bottom Mobile Ad -->
+    <div class="ad-sticky" id="ad-sticky-bottom">
+      <div class="ad-sticky-bar">
+        <span class="ad-label">Sponsored Ad</span>
+        <button type="button" class="ad-sticky-close" id="btn-close-sticky-ad" title="Close Ad">✕</button>
+      </div>
+      <div class="ad-wrapper" id="ad-slot-sticky"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
